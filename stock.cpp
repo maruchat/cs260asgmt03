@@ -5,8 +5,8 @@
 using namespace std;
 
 Stock::Stock(char const * const symbol, char const * const name, int sharePrice, Date priceDate) :
-    symbol{new char[strlen(symbol) - 1]},
-    name{new char[strlen(name) - 1]},
+    symbol{new char[strlen(symbol) + 1]},
+    name{new char[strlen(name) + 1]},
     sharePrice{sharePrice},
     priceDate{priceDate}
 {
@@ -31,8 +31,15 @@ char const * const Stock::getSymbol(void) const
 you can choose to implement any of the next 3 items if necessary --
 if not, feel free not to implement them
 
-Stock::Stock(const Stock& s)
+
+Stock::Stock(const Stock& s) :
+    symbol{new char[strlen(s.getSymbol()) + 1]},
+    name{new char[strlen(s->name) + 1]},
+    sharePrice{s.sharePrice},
+    priceDate{s.priceDate}
 {
+    strcpy(symbol, s.getSymbol());
+    //strcpy(name, s->name);
 }
 
 Stock& Stock::operator=(const Stock& s)

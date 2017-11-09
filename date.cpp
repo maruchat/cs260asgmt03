@@ -9,7 +9,17 @@ Date::Date(Month month, int day, int year) :
 {
 }
 
-Date::Date()
+Date::Date():
+    month{INVALID},
+    day{-1},
+    year{-1}
+{
+}
+
+Date::Date(const Date& d) :
+    month{d.month},
+    day{d.day},
+    year{d.year}
 {
 }
 
