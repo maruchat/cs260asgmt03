@@ -1,10 +1,17 @@
 #include <iomanip>
+#include <cstring>
 #include "stock.h"
 
 using namespace std;
 
-Stock::Stock(char const * const symbol, char const * const name, int sharePrice, Date priceDate)
+Stock::Stock(char const * const symbol, char const * const name, int sharePrice, Date priceDate) :
+    symbol{new char[strlen(symbol) - 1]},
+    name{new char[strlen(name) - 1]},
+    sharePrice{sharePrice},
+    priceDate{priceDate}
 {
+    strcpy(this->symbol, symbol);
+    strcpy(this->name, name);
 }
 
 Stock::Stock(void)
