@@ -60,5 +60,6 @@ ostream& operator<<(ostream& out, const Date& d)
             out << "December";
             break;
     }
+    out << ' ' << d.day << ", " << d.year;
 	return out;
 }
