@@ -15,7 +15,7 @@ public:
 	Date(Month month, int day, int year);
 	Date(void);								// default constructor
 	~Date(void);
-
+    
 	friend std::ostream& operator<<(std::ostream& out, const Date& d);
 
 private:

@@ -18,6 +18,47 @@ Date::~Date(void)
 }
 
 ostream& operator<<(ostream& out, const Date& d)
-{
+{ 
+    switch(d.month)
+    {
+        case Date::INVALID:
+            break;
+        case Date::JANUARY:
+            out << "January";
+            break;
+        case Date::FEBRUARY:
+            out << "Febuary";
+            break;
+        case Date::MARCH:
+            out << "March";
+            break;
+        case Date::APRIL:
+            out << "April";
+            break;
+        case Date::MAY:
+            out << "May";
+            break;
+        case Date::JUNE:
+            out << "June";
+            break;
+        case Date::JULY:
+            out << "July";
+            break;
+        case Date::AUGUST:
+            out << "August";
+            break;
+        case Date::SEPTEMBER:
+            out << "September";
+            break;
+        case Date::OCTOBER:
+            out << "October";
+            break;
+        case Date::NOVEMBER:
+            out << "November";
+            break;
+        case Date::DECEMBER:
+            out << "December";
+            break;
+    }
 	return out;
 }
