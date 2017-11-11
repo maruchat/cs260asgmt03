@@ -3,7 +3,7 @@
 using namespace std;
 
 // change the value of this variable to be your own name instead of "I. Forgot"
-const char	HashMap::YOUR_NAME[] = "I. Forgot";
+const char	HashMap::YOUR_NAME[] = "Thomas Marucha";
 
 HashMap::HashMap(int capacity)
 {

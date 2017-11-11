@@ -8,7 +8,7 @@
 class HashMap
 {
 public:
-	static const char	YOUR_NAME["Thomas Marucha"];	// used for printing out programmer's name
+	static const char	YOUR_NAME[];	// used for printing out programmer's name
 
 	HashMap(int capacity);
 	~HashMap(void);
