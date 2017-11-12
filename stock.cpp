@@ -4,6 +4,8 @@
 
 using namespace std;
 
+const int   Stock::columnWidths[4] = {0, 0, 0, 0};
+
 Stock::Stock(char const * const symbol, char const * const name, int sharePrice, Date priceDate) :
     symbol{new char[strlen(symbol) + 1]},
     name{new char[strlen(name) + 1]},

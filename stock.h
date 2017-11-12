@@ -33,6 +33,7 @@ public:
 
 	friend class HashMap;
 private:
+    static const int    columnWidths[4];
     char* symbol;
     char* name;
     int sharePrice;
