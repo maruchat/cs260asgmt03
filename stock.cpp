@@ -20,11 +20,13 @@ Stock::Stock(void)
 
 Stock::~Stock(void)
 {
+    delete [] symbol;
+    delete [] name;
 }
 
 char const * const Stock::getSymbol(void) const
 {
-	return "<stock symbol>";	// change this to return the actual stock symbol
+	return symbol;	// change this to return the actual stock symbol
 }
 
 /*
