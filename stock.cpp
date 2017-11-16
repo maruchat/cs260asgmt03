@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int   Stock::columnWidths[4] = {0, 0, 0, 0};
+const int   Stock::columnWidths[4] = {8, 41, 8, 5 };
 
 Stock::Stock(char const * const symbol, char const * const name, int sharePrice, Date priceDate) :
     symbol{new char[strlen(symbol) + 1]},
@@ -76,6 +76,11 @@ void Stock::displayHeaders(ostream& out)
 	//
 	//  symbol  name                                      price   date
 	//  ------  ----                                      -----   ----
+    out << setw(columnWidths[0]) << "symbol"
+        << setw(columnWidths[1]) << "name"
+        << setw(columnWidths[2]) << "price"
+        << setw(columnWidths[3]) << "date";
+
 }
 
 // print share price as DOLLARS

@@ -1,16 +1,20 @@
 #include "hashmap.h"
-
+#include <cstring>
 using namespace std;
 
 // change the value of this variable to be your own name instead of "I. Forgot"
 const char	HashMap::YOUR_NAME[] = "Thomas Marucha";
 
-HashMap::HashMap(int capacity)
+HashMap::HashMap(int capacity) :
+    slots{new Slot[capacity]},
+    capacity{capacity},
+    nStocks{0}  
 {
 }
 
 HashMap::~HashMap(void)
 {
+    delete [] slots;
 }
 
 bool HashMap::get(char const * const symbol, Stock& s,
@@ -74,12 +78,23 @@ unsigned int HashMap::hashStr(char const * const s)
 	// You can and should do this computation entirely with integers. In other
 	// words, there is no need to use floating point values. In particular, you
 	// should not use the pow() function from <math.h> in this lab.
-
-	return 0;
+    int hashValue = 0;
+    int multiplier;
+    for(unsigned int i = 0; i < strlen(s); i++)
+    {   
+        multiplier = 31;
+        for(int j = ( strlen(s) - i - 1 ); j > 0; j--)
+        {
+            multiplier *= 31;
+        } 
+        hashValue += (multiplier * s[i]);
+    }
+	return hashValue;
 }
 
 ostream& operator<<(ostream& out, const HashMap &h)
 {
+    Stock::displayHeaders(out);
 	out << "<print the contents of the HashMap>" << endl;
-	return out;
+    return out;
 }
