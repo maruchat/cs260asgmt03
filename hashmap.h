@@ -66,7 +66,8 @@ private:
 	struct Slot
 	{
 		Stock	slotStock;
-	};
+	    bool occupied = false;
+    };
 
 	Slot	*slots;							// array of instances of slot
 	int		capacity;						// number of slots in array

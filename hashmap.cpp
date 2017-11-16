@@ -26,8 +26,21 @@ bool HashMap::get(char const * const symbol, Stock& s,
 	// to set usedIndex to -1 before it returns false.
 
 	// recode these to return the right things
-	symbolHash = 0xFFFFFFFF;
-	hashIndex =  0xFFFFFFFF;
+	symbolHash = hashStr( s.getSymbol() );
+	hashIndex =  ( symbolHash % capacity );
+    for(unsigned int i = 0; i < capacity; i++)
+    {
+        if( !slots[(hashIndex + i) % capacity].occupied)
+        {
+            usedIndex = -1;
+            return false;
+        }
+        if( strcmp( slots[(hashIndex + i) & capacity].slotStock.getSymbol(), s.getSymbol()) == 0)
+        {
+            seqLength = (i + 1);
+            usedIndex = (hashIndex + i) % capacity;
+        }
+    }
 	usedIndex =  0xFFFFFFFF;
 	seqLength =  0xFFFFFFFF;
 
@@ -39,10 +52,23 @@ bool HashMap::put(const Stock& s,
 				  unsigned int& usedIndex, unsigned int& seqLength)
 {
 	// recode these to return the right things
-	symbolHash = 0xFFFFFFFF;
-	hashIndex =  0xFFFFFFFF;
-	usedIndex =  0xFFFFFFFF;
-	seqLength =  0xFFFFFFFF;
+	symbolHash = hashStr( s.getSymbol() );
+	hashIndex =  ( symbolHash % capacity );
+    for(unsigned int i = 0; i < capacity; i++)
+    {
+        if( !(slots[ ( hashIndex + i ) % capacity ].occupied) )
+        {
+            usedIndex = ( hashIndex + i ) % capacity;
+            seqLength = (i + 1);
+            slots[usedIndex].occupied = true;
+            slots[usedIndex].slotStock = s;
+            return true;
+        }
+        seqLength++;        
+    }
+    
+    
+    usedIndex =  0xFFFFFFFF;
 
 	return false;
 }
