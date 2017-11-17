@@ -64,7 +64,6 @@ bool HashMap::put(const Stock& s,
             slots[usedIndex].slotStock = s;
             return true;
         }
-        seqLength++;        
     }
     
     

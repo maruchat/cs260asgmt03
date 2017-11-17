@@ -76,10 +76,12 @@ void Stock::displayHeaders(ostream& out)
 	//
 	//  symbol  name                                      price   date
 	//  ------  ----                                      -----   ----
-    out << setw(columnWidths[0]) << "symbol"
-        << setw(columnWidths[1]) << "name"
-        << setw(columnWidths[2]) << "price"
-        << setw(columnWidths[3]) << "date";
+    out << dec << setfill(' ')
+        << left 
+        << setw(8) << "symbol"
+        << setw(6) << "name"
+        << right << setw(41) << "price"
+        << setw(7) << "date" << endl;
 
 }
 
