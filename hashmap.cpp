@@ -29,7 +29,7 @@ bool HashMap::get(char const * const symbol, Stock& s,
 	// recode these to return the right things
     symbolHash = hashStr( symbol );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i < nStocks; i++)
+    for(int i = 0; i < nStocks; i++)
     {
         if( slots[(hashIndex + i) % capacity].empty )
         {
@@ -67,7 +67,7 @@ bool HashMap::put(const Stock& s,
     }
     symbolHash = hashStr( s.getSymbol() );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i <= nStocks; i++)    
+    for(int i = 0; i <= nStocks; i++)    
     {
         if( !( slots[ ( hashIndex + i ) % capacity ].slotStock.getSymbol() ) )
         {
@@ -90,7 +90,7 @@ bool HashMap::remove(char const * const symbol, Stock& s,
 	// recode these to return the right things	
     symbolHash = hashStr( symbol );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i < nStocks; i++)
+    for(int i = 0; i < nStocks; i++)
     {
         if( slots[(hashIndex + i) % capacity].empty )
         {
