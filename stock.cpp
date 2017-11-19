@@ -20,7 +20,7 @@ Stock::Stock(void) :
     symbol{NULL},
     name{NULL},
     sharePrice{-1},
-    priceDate{}
+    priceDate{Date()}
 {
 }
 
@@ -52,6 +52,9 @@ Stock::Stock(const Stock& s) :
 
 Stock& Stock::operator=(const Stock& s)
 {
+    if(this == &s){ return *this; }
+    if(symbol != NULL){ delete symbol; }
+    if(name != NULL){ delete name; }
     if(!s.symbol)
     {
         symbol = NULL;
