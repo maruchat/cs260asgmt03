@@ -66,7 +66,7 @@ private:
 	struct Slot
 	{
 		Stock	slotStock;
-	    bool empty = true;
+	    bool empty = true;                 //indicates whether slot has ever been used (for probing)
     };
 
 	Slot	*slots;							// array of instances of slot

@@ -98,6 +98,13 @@ void Stock::displayHeaders(ostream& out)
         << setw(6) << "name"
         << right << setw(41) << "price"
         << setw(7) << "date" << endl;
+    out << dec << setfill(' ')
+        << left 
+        << setw(8) << "------"
+        << setw(6) << "----"
+        << right << setw(41) << "-----"
+        << setw(7) << "----" << endl;
+
 
 }
 
@@ -105,5 +112,20 @@ void Stock::displayHeaders(ostream& out)
 // (e.g. 2483 would print out as 24.83 and 200 would print out as 2.00)
 ostream& operator<<(ostream& out, const Stock& s)
 {
+    out << left << setfill(' ')
+        << setw(8) << s.symbol
+        << setw(42) << s.name
+        << right
+        << setw(2) << ( s.sharePrice / 100 )
+        << '.';
+   
+    if( ( s.sharePrice % 100 ) < 10 )
+        out << '0';        
+    out << ( s.sharePrice % 100 );
+    /*if( ( s.sharePrice % 100 ) == 0 )
+        out << '0';
+    */
+    out << "   " << right << setfill(' ')
+        << s.priceDate;
 	return out;
 }

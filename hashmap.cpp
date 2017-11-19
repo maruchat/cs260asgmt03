@@ -59,9 +59,15 @@ bool HashMap::put(const Stock& s,
 				  unsigned int& usedIndex, unsigned int& seqLength)
 {
 	// recode these to return the right things
+    
+    Stock z;
+    if( get(s.symbol, z, symbolHash, hashIndex, usedIndex, seqLength) )
+    {
+        return false;
+    }
     symbolHash = hashStr( s.getSymbol() );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i <= nStocks; i++)
+    for(unsigned int i = 0; i <= nStocks; i++)    
     {
         if( !( slots[ ( hashIndex + i ) % capacity ].slotStock.getSymbol() ) )
         {
@@ -71,13 +77,16 @@ bool HashMap::put(const Stock& s,
             slots[usedIndex].slotStock = s;
             nStocks++;
             return true;
-        }
+        }/*
+        if( strcmp( slots[(hashIndex + i) % capacity].slotStock.getSymbol(), s.symbol ) == 0)
+        {
+            seqLength = (i + 1);
+            usedIndex = -1;
+            return false;
+        }*/
     }
-    
-    
-    usedIndex =  0xFFFFFFFF;
-
-	return false;
+    usedIndex = -1;
+    return false;
 }
 
 bool HashMap::remove(char const * const symbol, Stock& s,
@@ -104,6 +113,7 @@ bool HashMap::remove(char const * const symbol, Stock& s,
                 usedIndex = (hashIndex + i) % capacity;            
                 s = slots[usedIndex].slotStock;
                 slots[usedIndex].slotStock = Stock();
+                nStocks--;
                 return true;
             }
         }
@@ -150,7 +160,17 @@ unsigned int HashMap::hashStr(char const * const s)
 
 ostream& operator<<(ostream& out, const HashMap &h)
 {
+    if( h.nStocks == 0 )
+    {
+        out << "No Stocks" << endl;
+        return out;
+    }
     Stock::displayHeaders(out);
-	out << "<print the contents of the HashMap>" << endl;
+    for(int i = 0; i < h.capacity; i++)
+    {
+        if( !( h.slots[i].slotStock.getSymbol() == NULL ) )
+            out << h.slots[i].slotStock << endl;
+    }
     return out;
 }
+
