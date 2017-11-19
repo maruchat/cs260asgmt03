@@ -16,7 +16,11 @@ Stock::Stock(char const * const symbol, char const * const name, int sharePrice,
     strcpy(this->name, name);
 }
 
-Stock::Stock(void)
+Stock::Stock(void) :
+    symbol{NULL},
+    name{NULL},
+    sharePrice{-1},
+    priceDate{}
 {
 }
 
@@ -48,12 +52,24 @@ Stock::Stock(const Stock& s) :
 
 Stock& Stock::operator=(const Stock& s)
 {
-    symbol = new char[strlen(s.symbol) + 1];
-    name = new char[strlen(s.name) + 1];
+    if(!s.symbol)
+    {
+        symbol = NULL;
+    }else
+    {
+        symbol = new char[strlen(s.symbol) + 1];    
+        strcpy(symbol, s.symbol);
+    }
+    if(!s.name)
+    {
+        name = NULL;
+    }else
+    {
+        name = new char[strlen(s.name) + 1];
+        strcpy(name, s.name);
+    }
     sharePrice = s.sharePrice;
     priceDate = s.priceDate;
-    strcpy(symbol, s.symbol);
-    strcpy(name, s.name);
 	return *this;
 }
 

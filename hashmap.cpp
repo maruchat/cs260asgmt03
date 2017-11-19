@@ -1,5 +1,6 @@
 #include "hashmap.h"
 #include <cstring>
+#include <iostream>
 using namespace std;
 
 // change the value of this variable to be your own name instead of "I. Forgot"
@@ -26,23 +27,29 @@ bool HashMap::get(char const * const symbol, Stock& s,
 	// to set usedIndex to -1 before it returns false.
 
 	// recode these to return the right things
-	symbolHash = hashStr( s.getSymbol() );
+    symbolHash = hashStr( symbol );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i < capacity; i++)
+    for(unsigned int i = 0; i < nStocks; i++)
     {
-        if( !slots[(hashIndex + i) % capacity].occupied)
+        if( slots[(hashIndex + i) % capacity].empty )
         {
             usedIndex = -1;
+            seqLength = (i + 1);
             return false;
         }
-        if( strcmp( slots[(hashIndex + i) & capacity].slotStock.getSymbol(), s.getSymbol()) == 0)
+        if( slots[(hashIndex + i) % capacity].slotStock.getSymbol() )
         {
-            seqLength = (i + 1);
-            usedIndex = (hashIndex + i) % capacity;
+            if( strcmp( slots[(hashIndex + i) % capacity].slotStock.getSymbol(), symbol ) == 0)
+            {
+                seqLength = (i + 1);
+                usedIndex = (hashIndex + i) % capacity;
+                s = slots[usedIndex].slotStock;
+                return true;
+            }
         }
     }
-	usedIndex =  0xFFFFFFFF;
-	seqLength =  0xFFFFFFFF;
+	usedIndex =  -1;
+	seqLength =  1;
 
 	return false;
 }
@@ -52,16 +59,17 @@ bool HashMap::put(const Stock& s,
 				  unsigned int& usedIndex, unsigned int& seqLength)
 {
 	// recode these to return the right things
-	symbolHash = hashStr( s.getSymbol() );
+    symbolHash = hashStr( s.getSymbol() );
 	hashIndex =  ( symbolHash % capacity );
-    for(unsigned int i = 0; i < capacity; i++)
+    for(unsigned int i = 0; i <= nStocks; i++)
     {
-        if( !(slots[ ( hashIndex + i ) % capacity ].occupied) )
+        if( !( slots[ ( hashIndex + i ) % capacity ].slotStock.getSymbol() ) )
         {
             usedIndex = ( hashIndex + i ) % capacity;
             seqLength = (i + 1);
-            slots[usedIndex].occupied = true;
+            slots[usedIndex].empty = false;
             slots[usedIndex].slotStock = s;
+            nStocks++;
             return true;
         }
     }
@@ -76,13 +84,34 @@ bool HashMap::remove(char const * const symbol, Stock& s,
 					 unsigned int& symbolHash, unsigned int& hashIndex,
 					 unsigned int& usedIndex, unsigned int& seqLength)
 {
-	// recode these to return the right things
-	symbolHash = 0xFFFFFFFF;
-	hashIndex =  0xFFFFFFFF;
-	usedIndex =  0xFFFFFFFF;
-	seqLength =  0xFFFFFFFF;
+	// recode these to return the right things	
+    symbolHash = hashStr( symbol );
+	hashIndex =  ( symbolHash % capacity );
+    for(unsigned int i = 0; i < nStocks; i++)
+    {
+        if( slots[(hashIndex + i) % capacity].empty )
+        {
+            usedIndex = -1;
+            seqLength = (i + 1);
+            return false;
+        }
+        if( slots[(hashIndex + i) % capacity].slotStock.getSymbol() )
+        {
 
-	return false;
+            if( strcmp( slots[(hashIndex + i) % capacity].slotStock.getSymbol(), symbol ) == 0)
+            {
+                seqLength = (i + 1);
+                usedIndex = (hashIndex + i) % capacity;            
+                s = slots[usedIndex].slotStock;
+                slots[usedIndex].slotStock = Stock();
+                return true;
+            }
+        }
+    }
+	usedIndex =  -1;
+	seqLength =  1;
+
+	return false;   
 }
 
 unsigned int HashMap::hashStr(char const * const s)
@@ -103,11 +132,13 @@ unsigned int HashMap::hashStr(char const * const s)
 	// You can and should do this computation entirely with integers. In other
 	// words, there is no need to use floating point values. In particular, you
 	// should not use the pow() function from <math.h> in this lab.
+    
     int hashValue = 0;
     int multiplier;
+    
     for(unsigned int i = 0; i < strlen(s); i++)
     {   
-        multiplier = 31;
+        multiplier = 1;
         for(int j = ( strlen(s) - i - 1 ); j > 0; j--)
         {
             multiplier *= 31;
