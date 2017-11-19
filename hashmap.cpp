@@ -77,13 +77,7 @@ bool HashMap::put(const Stock& s,
             slots[usedIndex].slotStock = s;
             nStocks++;
             return true;
-        }/*
-        if( strcmp( slots[(hashIndex + i) % capacity].slotStock.getSymbol(), s.symbol ) == 0)
-        {
-            seqLength = (i + 1);
-            usedIndex = -1;
-            return false;
-        }*/
+        }
     }
     usedIndex = -1;
     return false;
